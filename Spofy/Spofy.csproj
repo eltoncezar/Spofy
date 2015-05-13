@@ -166,6 +166,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Images\screenshot.png" />
+    <Content Include="LICENSE.txt" />
+    <None Include="README.md" />
     <Resource Include="Fonts\Nexa Bold.otf" />
     <Resource Include="Fonts\Nexa Light.otf" />
     <None Include="Properties\Settings.settings">
