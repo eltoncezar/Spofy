@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Spofy.Views.ButtonsBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:self="clr-namespace:Spofy.Classes"
+             mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="8" HorizontalAlignment="Center" MaxHeight="50">
+            <Image Name="btnPrevious">
+                <Image.Style>
+                    <Style>
+                        <Setter Property="Image.Source" Value="../Images/previous.png" />
+                        <Style.Triggers>
+                            <Trigger  Property="Image.IsMouseOver" Value="True">
+                                <Setter Property="Image.Source" Value="../Images/previous_hover.png" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Grid>
+                <Image Name="btnPause" Visibility="{Binding IsPlaying, Converter={self:BoolToVisibilityConverter}}">
+                    <Image.Style>
+                        <Style>
+                            <Setter Property="Image.Source" Value="../Images/pause.png" />
+                            <Style.Triggers>
+                                <Trigger  Property="Image.IsMouseOver" Value="True">
+                                    <Setter Property="Image.Source" Value="../Images/pause_hover.png" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Image Name="btnPlay" Visibility="{Binding IsPlaying, Converter={self:BoolToVisibilityConverter}, ConverterParameter='invert'}">
+                    <Image.Style>
+                        <Style>
+                            <Setter Property="Image.Source" Value="../Images/play.png" />
+                            <Style.Triggers>
+                                <Trigger  Property="Image.IsMouseOver" Value="True">
+                                    <Setter Property="Image.Source" Value="../Images/play_hover.png" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Grid>
+            <Image Name="btnNext">
+                <Image.Style>
+                    <Style>
+                        <Setter Property="Image.Source" Value="../Images/next.png" />
+                        <Style.Triggers>
+                            <Trigger  Property="Image.IsMouseOver" Value="True">
+                                <Setter Property="Image.Source" Value="../Images/next_hover.png" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Spofy.Views.SmallCover"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:Spofy.Views"
+             mc:Ignorable="d" 
+             Height="51" Width="200"
+             MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="1"/>
+        </Grid.RowDefinitions>
+        <Border Background="#222326">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding Cover}" Grid.Column="0"></Image>
+                <StackPanel Orientation="Vertical" Margin="10" Grid.Column="1">
+                    <TextBlock Text="{Binding TrackName}" Foreground="#DFE0E6" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
+                    <TextBlock Name="txtArtistName" Text="{Binding ArtistName}" Foreground="#DFE0E6" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <views:ButtonsBar Background="#222326" x:Name="buttonsBar" Visibility="Hidden" HorizontalAlignment="Stretch"></views:ButtonsBar>
+        <views:PlayBar Time="{Binding CurrentTimeSeconds}" TotalTime="{Binding TotalTimeSeconds}" Grid.Row="1" Grid.ColumnSpan="2"></views:PlayBar>
+    </Grid>
+</UserControl>

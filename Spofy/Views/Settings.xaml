@@ -1,0 +1,35 @@
+﻿<Window x:Class="Spofy.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:self="clr-namespace:Spofy.Classes"
+        Title="Settings" Height="300" Width="300"
+        Background="#121314">
+    <StackPanel Margin="12">
+        <TextBlock FontSize="24" Foreground="#DFE0E6" Margin="0,0,0,8">Appearance</TextBlock>
+        <Rectangle Fill="#2E2F33" Height="1" Margin="0,0,0,8"></Rectangle>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center" Text="Always on top" Foreground="#DFE0E6" Grid.Column="0"></TextBlock>
+            <Image Height="20" Source="../Images/checkbox_checked.png" Grid.Column="1" Visibility="{Binding AlwaysOnTop, Converter={self:BoolToVisibilityConverter}}" MouseLeftButtonUp="Image_MouseLeftButtonUp"></Image>
+            <Image Height="20" Source="../Images/checkbox_unchecked.png" Grid.Column="1" Visibility="{Binding AlwaysOnTop, Converter={self:BoolToVisibilityConverter}, ConverterParameter=asd}" MouseLeftButtonUp="Image_MouseLeftButtonUp"></Image>
+        </Grid>
+        <TextBlock FontSize="24" Foreground="#DFE0E6" Margin="0,16,0,8">Style</TextBlock>
+        <Rectangle Fill="#2E2F33" Height="1"></Rectangle>
+        <StackPanel Margin="0,8,0,0">
+            <RadioButton x:Name="rdb0" GroupName="style" Tag="0">
+                <TextBlock Foreground="#DFE0E6">Large Cover</TextBlock>
+            </RadioButton>
+            <RadioButton x:Name="rdb1" GroupName="style" Tag="1">
+                <TextBlock Foreground="#DFE0E6">Small Cover</TextBlock>
+            </RadioButton>
+            <RadioButton x:Name="rdb2" GroupName="style" Tag="2">
+                <TextBlock Foreground="#DFE0E6">Minimal Cover</TextBlock>
+            </RadioButton>
+        </StackPanel>
+        <Button x:Name="btnOK" Content="OK" Width="75" Margin="0,16,0,0" Click="btnOK_Click"/>
+
+    </StackPanel>
+</Window>
