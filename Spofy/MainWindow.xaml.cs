@@ -17,6 +17,18 @@
 /// https://www.simple-talk.com/dotnet/.net-framework/creating-tray-applications-in-.net-a-practical-guide/
 /// http://labs.bjfocus.co.uk/2013/06/add-a-notification-icon-to-your-wpf-program/
 /// http://www.hardcodet.net/wpf-notifyicon // https://visualstudiogallery.msdn.microsoft.com/aacbc77c-4ef6-456f-80b7-1f157c2909f7/
+/// 
+/// DESKBAND C#
+/// http://www.codeproject.com/Articles/39189/Shell-Extensibility-Explorer-Desk-Band-Tray-Notifi
+/// http://stackoverflow.com/questions/5758840/deskband-in-windows-7-x64-c
+/// http://stackoverflow.com/questions/13889290/how-do-i-place-my-custom-toolbar-deskband-on-taskbar-in-windows-7-win-wpf
+/// http://stackoverflow.com/questions/5556665/how-to-make-deskbands-work-on-windows-7-x64
+/// http://stackoverflow.com/questions/5515311/deskband-for-windows-7
+/// http://www.codeproject.com/Articles/6741/AppBar-using-C
+/// https://social.msdn.microsoft.com/Forums/en-US/7b799b8a-888b-47f2-b20f-6f9ab969cfba/make-a-deskband-how-to?forum=Vsexpressvb
+/// https://msdn.microsoft.com/en-us/library/windows/desktop/dd378460(v=vs.85).aspx
+/// https://msdn.microsoft.com/en-us/library/windows/desktop/cc144099(v=vs.85).aspx#desk_bands
+/// 
 
 using Spofy.Classes;
 using Spofy.Views;
@@ -184,7 +196,7 @@ namespace Spofy
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Sets the initial position.
-            SetInitialWindowPosition();
+            //SetInitialWindowPosition();
             // Sets the monitoring timer loop.
             InitializeWindowPositionMonitoring();
         }

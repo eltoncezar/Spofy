@@ -1,7 +1,8 @@
 ﻿<Window x:Class="Spofy.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Height="310" Width="200">
+        Height="310" Width="200"
+        Background="{StaticResource BackgroundColor}">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo Description="Control your media" ThumbnailClipMargin="5">
             <TaskbarItemInfo.ThumbButtonInfos>
@@ -20,9 +21,6 @@
             </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
     </Window.TaskbarItemInfo>
-    <Window.Background>
-        <SolidColorBrush Color="#121314"/>
-    </Window.Background>
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem x:Name="cmiSettings" Header="Settings" Click="cmiSettings_Click">

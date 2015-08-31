@@ -13,7 +13,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="1"/>
         </Grid.RowDefinitions>
-        <Border Background="#222326">
+        <Border Background="{StaticResource BackgroundColor}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
@@ -21,12 +21,12 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="{Binding Cover}" Grid.Column="0"></Image>
                 <StackPanel Orientation="Vertical" Margin="10" Grid.Column="1">
-                    <TextBlock Text="{Binding TrackName}" Foreground="#DFE0E6" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
-                    <TextBlock Name="txtArtistName" Text="{Binding ArtistName}" Foreground="#DFE0E6" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
+                    <TextBlock Text="{Binding TrackName}" Foreground="{StaticResource ForegroundColor}" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
+                    <TextBlock Name="txtArtistName" Text="{Binding ArtistName}" Foreground="{StaticResource ForegroundColor}" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
                 </StackPanel>
             </Grid>
         </Border>
-        <views:ButtonsBar Background="#222326" x:Name="buttonsBar" Visibility="Hidden" HorizontalAlignment="Stretch"></views:ButtonsBar>
+        <views:ButtonsBar Background="{StaticResource BackgroundColor}" x:Name="buttonsBar" Visibility="Hidden" HorizontalAlignment="Stretch"></views:ButtonsBar>
         <views:PlayBar Time="{Binding CurrentTimeSeconds}" TotalTime="{Binding TotalTimeSeconds}" Grid.Row="1" Grid.ColumnSpan="2"></views:PlayBar>
     </Grid>
 </UserControl>
