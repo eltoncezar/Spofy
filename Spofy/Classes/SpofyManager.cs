@@ -38,11 +38,11 @@ namespace Spofy.Classes
                 Thread.Sleep(5000);
             }
 
-            //if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
-            //{
-            //    SpotifyLocalAPI.RunSpotifyWebHelper();
-            //    Thread.Sleep(4000);
-            //}
+            if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
+            {
+                SpotifyLocalAPI.RunSpotifyWebHelper();
+                Thread.Sleep(4000);
+            }
 
             if (!_spotify.Connect())
             {
@@ -82,11 +82,11 @@ namespace Spofy.Classes
 
         public void Register(Dispatcher dispatcher)
         {
-            //UpdateTrack();
+            UpdateTrack();
 
-            //_spotify.OnTrackChange += OnTrackChange;
-            //_spotify.OnPlayStateChange += OnPlayStateChange;
-            //_spotify.OnTrackTimeChange += OnTrackTimeChange;
+            _spotify.OnTrackChange += _spotify_OnTrackChange;
+            _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
+            _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
 
             _spotify.SynchronizingObject = new DispatcherWinFormsCompatAdapter(dispatcher);
             _spotify.ListenForEvents = true;
@@ -101,7 +101,7 @@ namespace Spofy.Classes
             return mins + ":" + secs;
         }
 
-        private void OnPlayStateChange(PlayStateEventArgs e)
+        private void _spotify_OnPlayStateChange(object sender, PlayStateEventArgs e)
         {
             if (model.IsAdPlaying)
                 return;
@@ -128,7 +128,7 @@ namespace Spofy.Classes
             }
         }
 
-        private void OnTrackChange(TrackChangeEventArgs e)
+        private void _spotify_OnTrackChange(object sender, TrackChangeEventArgs e)
         {
             if (model.IsAdPlaying)
                 return;
@@ -136,7 +136,7 @@ namespace Spofy.Classes
             UpdateTrack();
         }
 
-        private void OnTrackTimeChange(TrackTimeChangeEventArgs e)
+        private void _spotify_OnTrackTimeChange(object sender, TrackTimeChangeEventArgs e)
         {
             if (model.IsAdPlaying)
                 return;
@@ -156,6 +156,10 @@ namespace Spofy.Classes
             if (status == null || status.Track == null)
             {
                 model.IsAdPlaying = true;
+                model.ArtistName = "";
+                model.Cover = null;
+                model.Image = null;
+                model.TrackName = null;
                 return;
             }
             else
@@ -163,8 +167,11 @@ namespace Spofy.Classes
                 model.IsAdPlaying = false;
             }
 
-            //Is Ad Running
-            if (!status.NextEnabled && !status.PrevEnabled)
+            if (
+                //Is Ad Running
+                (!status.NextEnabled && !status.PrevEnabled) ||
+                (status.Track.AlbumResource == null || status.Track.ArtistResource == null)
+                )
                 return; //TODO: better ad treatment
 
             _currentTrack = status.Track;
@@ -190,6 +197,7 @@ namespace Spofy.Classes
                 model.LastTrack = _currentTrack;
             }
         }
+
         #region Media Commands
 
         public void Next()
