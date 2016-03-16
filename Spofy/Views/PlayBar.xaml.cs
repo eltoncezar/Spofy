@@ -9,15 +9,14 @@ namespace Spofy.Views
     /// </summary>
     public partial class PlayBar : UserControl
     {
+        #region Properties
+
+        #region Time
         public static readonly DependencyProperty TimeProperty = DependencyProperty.Register("Time", typeof(double), typeof(PlayBar), new PropertyMetadata(ValueChangedStatic));
         public double Time
         {
             get { return (double)GetValue(TimeProperty); }
-            set
-            {
-
-                SetValue(TimeProperty, value);
-            }
+            set { SetValue(TimeProperty, value); }
         }
 
         private static void ValueChangedStatic(Object sender, DependencyPropertyChangedEventArgs e)
@@ -30,18 +29,16 @@ namespace Spofy.Views
             double totalTime = (double)GetValue(TotalTimeProperty);
             double currentTime = (double)parameter;
 
-            bar.Width = (currentTime * this.ActualWidth) / totalTime;
+            bar.Width = totalTime != 0 ? (currentTime * this.ActualWidth) / totalTime : 0;
         }
+        #endregion
 
+        #region TotalTime
         public static readonly DependencyProperty TotalTimeProperty = DependencyProperty.Register("TotalTime", typeof(double), typeof(PlayBar), new PropertyMetadata(TotalValueChangedStatic));
         public double TotalTime
         {
             get { return (double)GetValue(TimeProperty); }
-            set
-            {
-
-                SetValue(TimeProperty, value);
-            }
+            set { SetValue(TimeProperty, value); }
         }
 
         private static void TotalValueChangedStatic(Object sender, DependencyPropertyChangedEventArgs e)
@@ -53,7 +50,9 @@ namespace Spofy.Views
         {
             bar.Width = 0;
         }
+        #endregion
 
+        #endregion
 
         public PlayBar()
         {

@@ -16,13 +16,13 @@
         </Grid.RowDefinitions>
 
         <Image Source="{Binding Cover}"></Image>
-        <Border Grid.Row="1" Background="#222326">
+        <Border Grid.Row="1" Background="{StaticResource BackgroundColor}">
             <StackPanel Orientation="Vertical" Margin="10">
-                <TextBlock Text="{Binding TrackName}" Foreground="#DFE0E6" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
-                <TextBlock Name="txtArtistName" Text="{Binding ArtistName}" Foreground="#DFE0E6" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
+                <TextBlock Text="{Binding TrackName}" Foreground="{StaticResource ForegroundColor}" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
+                <TextBlock Name="txtArtistName" Text="{Binding ArtistName}" Foreground="{StaticResource ForegroundColor}" FontSize="13" TextOptions.TextRenderingMode="ClearType"/>
             </StackPanel>
         </Border>
-        <Grid x:Name="buttonsBar" Visibility="Hidden" Grid.RowSpan="3" Background="#222326" HorizontalAlignment="Stretch">
+        <Grid x:Name="buttonsBar" Visibility="Hidden" Grid.RowSpan="3" Background="{StaticResource BackgroundColor}" HorizontalAlignment="Stretch">
             <views:ButtonsBar HorizontalAlignment="Stretch" VerticalAlignment="Center"></views:ButtonsBar>
         </Grid>
         <views:PlayBar Grid.Row="2" Time="{Binding CurrentTimeSeconds}" TotalTime="{Binding TotalTimeSeconds}"></views:PlayBar>

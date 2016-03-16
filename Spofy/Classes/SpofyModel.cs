@@ -1,4 +1,4 @@
-﻿using SpotifyAPI.SpotifyLocalAPI;
+﻿using SpotifyAPI.Local.Models;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -146,6 +146,20 @@ namespace Spofy.Classes
             {
                 this.isPlaying = value;
                 this.NotifyPropertyChanged("IsPlaying");
+            }
+        }
+
+        private bool isAdPlaying;
+        public bool IsAdPlaying
+        {
+            get
+            {
+                return this.isAdPlaying;
+            }
+            set
+            {
+                this.isAdPlaying = value;
+                this.NotifyPropertyChanged("IsAdPlaying");
             }
         }
 

@@ -46,6 +46,15 @@
                     </Image.Style>
                 </Image>
             </Grid>
+            <!--<Grid>
+                
+                <Ellipse Width="46" Height="46" Stroke="{StaticResource ForegroundColor}" StrokeThickness="2"/>
+
+                <Polygon Points="0,0 8,5, 0,10" Stroke="{StaticResource ForegroundColor}" Fill="{StaticResource ForegroundColor}" Stretch="Fill" Margin="14,14,14,14"/>
+
+
+
+            </Grid>-->
             <Image Name="btnNext">
                 <Image.Style>
                     <Style>

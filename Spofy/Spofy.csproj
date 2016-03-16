@@ -62,8 +62,6 @@
     <Reference Include="SpotifyAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\SpotifyAPI.dll</HintPath>
-      <Private>True</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -167,8 +165,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="Images\screenshot.png" />
-    <Content Include="LICENSE.txt" />
-    <None Include="README.md" />
     <Resource Include="Fonts\Nexa Bold.otf" />
     <Resource Include="Fonts\Nexa Light.otf" />
     <None Include="Properties\Settings.settings">

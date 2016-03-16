@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="5" d:DesignWidth="300">
-    <Grid Background="#222326">
-        <Rectangle x:Name="bar" Margin="0" Fill="#84BD00" Width="0" HorizontalAlignment="Left"></Rectangle>
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Rectangle x:Name="bar" Margin="0" Fill="{StaticResource HighlightColor}" Width="0" HorizontalAlignment="Left"></Rectangle>
     </Grid>
 </UserControl>

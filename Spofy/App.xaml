@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="BackgroundColor" Color="#282828"></SolidColorBrush>
+        <SolidColorBrush x:Key="DarkBackgroundColor" Color="#181818"></SolidColorBrush>
+        <SolidColorBrush x:Key="HighlightColor" Color="#1ED760"></SolidColorBrush>
+        <SolidColorBrush x:Key="ForegroundColor" Color="#F0FFFF"></SolidColorBrush>
     </Application.Resources>
 </Application>

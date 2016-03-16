@@ -1,5 +1,8 @@
-﻿using SpotifyAPI.SpotifyLocalAPI;
+﻿using SpotifyAPI.Local;
+using SpotifyAPI.Local.Enums;
+using SpotifyAPI.Local.Models;
 using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -21,36 +24,27 @@ namespace Spofy.Classes
                 return instance;
             }
         }
-        #region Properties
-
-        public static string appName = "Spofy";
-        static GrowlInterop growl;
-        static SpotifyLocalAPIClass spotify;
-        static SpotifyMusicHandler mh;
-        static SpotifyEventHandler eh;
-        public SpofyModel model;
-
-        #endregion
 
         private SpofyManager()
         {
             model = new SpofyModel();
-            growl = new GrowlInterop();
+            _growl = new GrowlInterop();
 
-            spotify = new SpotifyLocalAPIClass();
-            if (!SpotifyLocalAPIClass.IsSpotifyRunning())
+            _spotify = new SpotifyLocalAPI();
+
+            if (!SpotifyLocalAPI.IsSpotifyRunning())
             {
-                spotify.RunSpotify();
+                SpotifyLocalAPI.RunSpotify();
                 Thread.Sleep(5000);
             }
 
-            if (!SpotifyLocalAPIClass.IsSpotifyWebHelperRunning())
+            if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
             {
-                spotify.RunSpotifyWebHelper();
+                SpotifyLocalAPI.RunSpotifyWebHelper();
                 Thread.Sleep(4000);
             }
 
-            if (!spotify.Connect())
+            if (!_spotify.Connect())
             {
                 Boolean retry = true;
                 while (retry)
@@ -58,7 +52,7 @@ namespace Spofy.Classes
                     MessageBoxResult result = MessageBox.Show("SpotifyLocalAPIClass could'nt load!\nDo you want to retry?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
                     if (result == MessageBoxResult.Yes)
                     {
-                        if (spotify.Connect())
+                        if (_spotify.Connect())
                             retry = false;
                         else
                             retry = true;
@@ -71,84 +65,31 @@ namespace Spofy.Classes
                     }
                 }
             }
-            mh = spotify.GetMusicHandler();
-            eh = spotify.GetEventHandler();
         }
+
+        #region Properties
+
+        public static string appName = "Spofy";
+        public SpofyModel model;
+
+        private static GrowlInterop _growl;
+        private static SpotifyLocalAPI _spotify;
+        private Track _currentTrack;
+        private Bitmap _currentLargeCover;
+        private string _currentSmallCoverUrl;
+
+        #endregion
 
         public void Register(Dispatcher dispatcher)
         {
-            spotify.Update();
-            UpdateTrack(mh.GetCurrentTrack());
+            UpdateTrack();
 
-            eh.OnTrackChange += OnTrackChange;
-            eh.OnPlayStateChange += OnPlayStateChange;
-            eh.OnTrackTimeChange += OnTrackTimeChange;
+            _spotify.OnTrackChange += _spotify_OnTrackChange;
+            _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
+            _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
 
-            eh.SetSynchronizingObject(new DispatcherWinFormsCompatAdapter(dispatcher));
-            eh.ListenForEvents(true);
-        }
-
-        private void OnPlayStateChange(PlayStateEventArgs e)
-        {
-            model.IsPlaying = e.playing;
-
-            Track track = mh.GetCurrentTrack();
-            if (track != null)
-            {
-                if (model.IsPlaying)
-                {
-                    if (track == model.LastTrack)
-                    {
-                        growl.MusicResumed(track.GetArtistName(), track.GetTrackName(), track.GetAlbumArtURL(AlbumArtSize.SIZE_160));
-                    }
-                    if (model.LastTrack == null)
-                    {
-                        UpdateTrack(track);
-                    }
-                }
-                else
-                {
-                    growl.MusicPaused(track.GetArtistName(), track.GetTrackName(), track.GetAlbumArtURL(AlbumArtSize.SIZE_160));
-                }
-            }
-        }
-
-        private void OnTrackChange(TrackChangeEventArgs e)
-        {
-            UpdateTrack(e.new_track);
-        }
-
-        private void OnTrackTimeChange(TrackTimeChangeEventArgs e)
-        {
-            UpdateTime(e.track_time);
-        }
-
-        private async void UpdateTrack(Track track)
-        {
-            if (track != null && !mh.IsAdRunning())
-            {
-                string artistName = track.GetArtistName();
-                string trackName = track.GetTrackName();
-                double totalTimeSeconds = track.GetLength();
-                string totalTime = formatTime(totalTimeSeconds);
-
-                App.Current.MainWindow.Title = String.Format("{0} - {1} - {2}", appName, artistName, trackName);
-                model.TrackName = trackName;
-                model.ArtistName = artistName;
-                model.TotalTimeSeconds = totalTimeSeconds;
-                model.TotalTime = totalTime;
-                model.Image = await track.GetAlbumArtAsync(AlbumArtSize.SIZE_640);
-
-                growl.TrackChanged(artistName, trackName, track.GetAlbumArtURL(AlbumArtSize.SIZE_160));
-
-                model.LastTrack = track;
-            }
-        }
-
-        private void UpdateTime(double time)
-        {
-            model.CurrentTimeSeconds = time;
-            model.CurrentTime = formatTime(time);
+            _spotify.SynchronizingObject = new DispatcherWinFormsCompatAdapter(dispatcher);
+            _spotify.ListenForEvents = true;
         }
 
         private String formatTime(double sec)
@@ -160,34 +101,130 @@ namespace Spofy.Classes
             return mins + ":" + secs;
         }
 
+        private void _spotify_OnPlayStateChange(object sender, PlayStateEventArgs e)
+        {
+            if (model.IsAdPlaying)
+                return;
+
+            model.IsPlaying = e.Playing;
+
+            if (_currentTrack != null)
+            {
+                if (model.IsPlaying)
+                {
+                    if (_currentTrack == model.LastTrack)
+                    {
+                        _growl.MusicResumed(_currentTrack.ArtistResource.Name, _currentTrack.TrackResource.Name, _currentSmallCoverUrl);
+                    }
+                    if (model.LastTrack == null)
+                    {
+                        UpdateTrack();
+                    }
+                }
+                else
+                {
+                    _growl.MusicPaused(_currentTrack.ArtistResource.Name, _currentTrack.TrackResource.Name, _currentSmallCoverUrl);
+                }
+            }
+        }
+
+        private void _spotify_OnTrackChange(object sender, TrackChangeEventArgs e)
+        {
+            if (model.IsAdPlaying)
+                return;
+
+            UpdateTrack();
+        }
+
+        private void _spotify_OnTrackTimeChange(object sender, TrackTimeChangeEventArgs e)
+        {
+            if (model.IsAdPlaying)
+                return;
+
+            UpdateTime(e.TrackTime);
+        }
+
+        private void UpdateTime(double time)
+        {
+            model.CurrentTimeSeconds = time;
+            model.CurrentTime = formatTime(time);
+        }
+
+        private async void UpdateTrack()
+        {
+            StatusResponse status = _spotify.GetStatus();
+            if (status == null || status.Track == null)
+            {
+                model.IsAdPlaying = true;
+                model.ArtistName = "";
+                model.Cover = null;
+                model.Image = null;
+                model.TrackName = null;
+                return;
+            }
+            else
+            {
+                model.IsAdPlaying = false;
+            }
+
+            if (
+                //Is Ad Running
+                (!status.NextEnabled && !status.PrevEnabled) ||
+                (status.Track.AlbumResource == null || status.Track.ArtistResource == null)
+                )
+                return; //TODO: better ad treatment
+
+            _currentTrack = status.Track;
+            _currentLargeCover = await _currentTrack.GetAlbumArtAsync(AlbumArtSize.Size640);
+            _currentSmallCoverUrl = _currentTrack.GetAlbumArtUrl(AlbumArtSize.Size160);
+
+            if (_currentTrack != null)
+            {
+                string artistName = _currentTrack.ArtistResource.Name;
+                string trackName = _currentTrack.TrackResource.Name;
+                double totalTimeSeconds = _currentTrack.Length;
+                string totalTime = formatTime(totalTimeSeconds);
+
+                App.Current.MainWindow.Title = String.Format("{0} - {1} - {2}", appName, artistName, trackName);
+                model.TrackName = trackName;
+                model.ArtistName = artistName;
+                model.TotalTimeSeconds = totalTimeSeconds;
+                model.TotalTime = totalTime;
+                model.Image = _currentLargeCover;
+
+                _growl.TrackChanged(artistName, trackName, _currentSmallCoverUrl);
+
+                model.LastTrack = _currentTrack;
+            }
+        }
+
         #region Media Commands
+
+        public void Next()
+        {
+            model.IsPlaying = true;
+            _spotify.Skip();
+        }
 
         public void PlayPause()
         {
             if (model.IsPlaying)
             {
                 model.IsPlaying = false;
-                mh.Pause();
+                _spotify.Pause();
             }
             else
             {
                 model.IsPlaying = true;
-                mh.Play();
+                _spotify.Play();
             }
         }
 
         public void Previous()
         {
             model.IsPlaying = true;
-            mh.Previous();
+            _spotify.Previous();
         }
-
-        public void Next()
-        {
-            model.IsPlaying = true;
-            mh.Skip();
-        }
-
         #endregion
     }
 }
