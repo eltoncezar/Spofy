@@ -1,12 +1,7 @@
 ﻿using SpotifyAPI.Local;
 using SpotifyAPI.Local.Enums;
 using SpotifyAPI.Local.Models;
-using SpotifyAPI.Web;
-using SpotifyAPI.Web.Auth;
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows;
@@ -77,10 +72,8 @@ namespace Spofy.Classes
         public static string appName = "Spofy";
         public SpofyModel model;
 
-        private ImplicitGrantAuth _auth;
         private static GrowlInterop _growl;
         private static SpotifyLocalAPI _spotify;
-        private static SpotifyWebAPI _spotifyWeb;
         private Track _currentTrack;
         private Bitmap _currentLargeCover;
         private string _currentSmallCoverUrl;
@@ -90,18 +83,6 @@ namespace Spofy.Classes
         public void Register(Dispatcher dispatcher)
         {
             UpdateTrack();
-
-            _auth = new ImplicitGrantAuth
-            {
-                RedirectUri = "http://localhost:8888",
-                ClientId = "12a2836e14274a93b95e12c1e4eabd29",
-                Scope = Scope.UserLibrarayRead | Scope.UserLibraryModify,
-                State = "XSS"
-            };
-            _auth.OnResponseReceivedEvent += _auth_OnResponseReceivedEvent;
-
-            _auth.StartHttpServer(8888);
-            _auth.DoAuth();
 
             _spotify.OnTrackChange += _spotify_OnTrackChange;
             _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
@@ -118,30 +99,6 @@ namespace Spofy.Classes
             if (secs.Length < 2)
                 secs = "0" + secs;
             return mins + ":" + secs;
-        }
-
-        private void _auth_OnResponseReceivedEvent(Token token, string state)
-        {
-            _auth.StopHttpServer();
-
-            if (state != "XSS")
-            {
-                MessageBox.Show(@"Wrong state received.", @"SpotifyWeb API Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            if (token.Error != null)
-            {
-                MessageBox.Show(String.Format("Error: {0}", token.Error), @"SpotifyWeb API Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            _spotifyWeb = new SpotifyWebAPI
-            {
-                UseAuth = true,
-                AccessToken = token.AccessToken,
-                TokenType = token.TokenType
-            };
-            //InitialSetup();
         }
 
         private void _spotify_OnPlayStateChange(object sender, PlayStateEventArgs e)
@@ -267,42 +224,6 @@ namespace Spofy.Classes
         {
             model.IsPlaying = true;
             _spotify.Previous();
-        }
-
-        public bool SaveCurrentTrack()
-        {
-            if (_spotifyWeb != null)
-            {
-                var id = _currentTrack.TrackResource.Uri.Substring(14);
-                ErrorResponse response = _spotifyWeb.SaveTrack(id);
-                if (!response.HasError())
-                    return true;
-                else
-                    return false;
-            }
-            else
-            {
-                MessageBox.Show(@"Couldn't connect to Spotify Web.", @"SpotifyWeb API Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-        }
-
-        public bool RemoveCurrentTrack()
-        {
-            if (_spotifyWeb != null)
-            {
-                var id = _currentTrack.TrackResource.Uri.Substring(14);
-                ErrorResponse response = _spotifyWeb.RemoveSavedTracks(new List<string>() { id });
-                if (!response.HasError())
-                    return true;
-                else
-                    return false;
-            }
-            else
-            {
-                MessageBox.Show(@"Couldn't connect to Spotify Web.", @"SpotifyWeb API Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
         }
         #endregion
     }
