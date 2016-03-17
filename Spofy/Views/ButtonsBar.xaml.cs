@@ -38,5 +38,10 @@ namespace Spofy.Views
         {
             SpofyManager.Instance.Next();
         }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            SpofyManager.Instance.SaveCurrentTrack();
+        }
     }
 }

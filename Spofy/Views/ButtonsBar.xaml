@@ -8,6 +8,7 @@
 
     <Grid>
         <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="8" HorizontalAlignment="Center" MaxHeight="50">
+            <Button Content="save" Click="Button_Click"></Button>
             <Image Name="btnPrevious">
                 <Image.Style>
                     <Style>
