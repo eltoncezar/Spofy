@@ -196,13 +196,14 @@ namespace Spofy.Classes
         private async void UpdateTrack()
         {
             StatusResponse status = _spotify.GetStatus();
-            if (status == null || status.Track == null)
+
+            if (status == null || status.Track == null || status.Track.IsAd())
             {
                 model.IsAdPlaying = true;
-                model.ArtistName = "";
+                model.ArtistName = "Spotify";
                 model.Cover = null;
                 model.Image = null;
-                model.TrackName = null;
+                model.TrackName = "Advertising";
                 return;
             }
             else
@@ -210,12 +211,12 @@ namespace Spofy.Classes
                 model.IsAdPlaying = false;
             }
 
-            if (
-                //Is Ad Running
-                (!status.NextEnabled && !status.PrevEnabled) ||
-                (status.Track.AlbumResource == null || status.Track.ArtistResource == null)
-                )
-                return; //TODO: better ad treatment
+            //if (
+            //    //Is Ad Running
+            //    (!status.NextEnabled && !status.PrevEnabled) ||
+            //    (status.Track.AlbumResource == null || status.Track.ArtistResource == null)
+            //    )
+            //    return; //TODO: better ad treatment
 
             _currentTrack = status.Track;
             _currentLargeCover = await _currentTrack.GetAlbumArtAsync(AlbumArtSize.Size640);
