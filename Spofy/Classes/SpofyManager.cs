@@ -190,7 +190,9 @@ namespace Spofy.Classes
                 model.ArtistName = artistName;
                 model.TotalTimeSeconds = totalTimeSeconds;
                 model.TotalTime = totalTime;
-                model.Image = _currentLargeCover;
+                if(_currentLargeCover != null) { 
+                    model.Image = _currentLargeCover;
+                }
 
                 _growl.TrackChanged(artistName, trackName, _currentSmallCoverUrl);
 
