@@ -1,5 +1,7 @@
 # Spofy
-Spofy is a WPF-Based Spotify mini player and notifier for Windows
+Spofy is a WPF-Based Spotify mini player and notifier for Windows.
+
+Just download the executable from here: [https://github.com/eltoncezar/Spofy/releases/latest](https://github.com/eltoncezar/Spofy/releases/latest)
 
 ![Example](https://raw.githubusercontent.com/eltoncezar/Spofy/master/Spofy/Images/screenshot.png)
 
