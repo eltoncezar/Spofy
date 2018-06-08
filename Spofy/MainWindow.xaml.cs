@@ -17,7 +17,7 @@
 /// https://www.simple-talk.com/dotnet/.net-framework/creating-tray-applications-in-.net-a-practical-guide/
 /// http://labs.bjfocus.co.uk/2013/06/add-a-notification-icon-to-your-wpf-program/
 /// http://www.hardcodet.net/wpf-notifyicon // https://visualstudiogallery.msdn.microsoft.com/aacbc77c-4ef6-456f-80b7-1f157c2909f7/
-/// 
+///
 /// DESKBAND C#
 /// http://www.codeproject.com/Articles/39189/Shell-Extensibility-Explorer-Desk-Band-Tray-Notifi
 /// http://stackoverflow.com/questions/5758840/deskband-in-windows-7-x64-c
@@ -28,13 +28,14 @@
 /// https://social.msdn.microsoft.com/Forums/en-US/7b799b8a-888b-47f2-b20f-6f9ab969cfba/make-a-deskband-how-to?forum=Vsexpressvb
 /// https://msdn.microsoft.com/en-us/library/windows/desktop/dd378460(v=vs.85).aspx
 /// https://msdn.microsoft.com/en-us/library/windows/desktop/cc144099(v=vs.85).aspx#desk_bands
-/// 
+///
 
 using Spofy.Classes;
 using Spofy.Views;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+
 //using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -48,7 +49,7 @@ namespace Spofy
         protected override void OnInitialized(EventArgs e)
         {
             Title = SpofyManager.appName;
-            AllowsTransparency = false;
+            AllowsTransparency = true;
             ResizeMode = ResizeMode.NoResize;
             WindowStartupLocation = WindowStartupLocation.Manual;
             WindowStyle = WindowStyle.None;
@@ -60,7 +61,7 @@ namespace Spofy
             MouseUp += Window_MouseUp;
             Loaded += Window_Loaded;
 
-            SourceInitialized += HandleSourceInitialized;
+            //SourceInitialized += HandleSourceInitialized;
             base.OnInitialized(e);
         }
 
@@ -72,7 +73,7 @@ namespace Spofy
             SpofyManager.Instance.Register(this.Dispatcher);
         }
 
-        #endregion
+        #endregion Init
 
         private void CheckSettings()
         {
@@ -85,12 +86,15 @@ namespace Spofy
                 case 0:
                     view = new LargeCover();
                     break;
+
                 case 1:
                     view = new SmallCover();
                     break;
+
                 case 2:
                     view = new MinimalCover();
                     break;
+
                 default:
                     view = new LargeCover();
                     break;
@@ -114,10 +118,9 @@ namespace Spofy
 
         private void ThumbPlayButton_Click(object sender, EventArgs e)
         {
-
         }
 
-        #endregion
+        #endregion Buttons
 
         #region Shadows
 
@@ -127,7 +130,7 @@ namespace Spofy
         /// Handles the source initialized.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> 
+        /// <param name="e">The <see cref="System.EventArgs"/>
         /// instance containing the event data.</param>
         private void HandleSourceInitialized(Object sender, EventArgs e)
         {
@@ -135,8 +138,7 @@ namespace Spofy
 
             // Returns the HwndSource object for the window
             // which presents WPF content in a Win32 window.
-            HwndSource.FromHwnd(m_hwndSource.Handle).AddHook(
-                new HwndSourceHook(NativeMethods.WindowProc));
+            HwndSource.FromHwnd(m_hwndSource.Handle).AddHook(new HwndSourceHook(NativeMethods.WindowProc));
 
             // http://msdn.microsoft.com/en-us/library/aa969524(VS.85).aspx
             Int32 DWMWA_NCRENDERING_POLICY = 2;
@@ -150,7 +152,7 @@ namespace Spofy
             NativeMethods.ShowShadowUnderWindow(m_hwndSource.Handle);
         }
 
-        #endregion
+        #endregion Shadows
 
         #region ContextMenu
 
@@ -161,7 +163,7 @@ namespace Spofy
             settingsWindow.Closed += settingsWindow_Closed;
         }
 
-        void settingsWindow_Closed(object sender, EventArgs e)
+        private void settingsWindow_Closed(object sender, EventArgs e)
         {
             CheckSettings();
         }
@@ -175,7 +177,8 @@ namespace Spofy
         {
             this.Close();
         }
-        #endregion
+
+        #endregion ContextMenu
 
         #region Snap to Edges
 
@@ -190,7 +193,7 @@ namespace Spofy
         // This will be the flag for the automatic positioning.
         private bool dragging = false;
 
-        // Wait until window is lodaded, but prior to being rendered to set position.  This 
+        // Wait until window is lodaded, but prior to being rendered to set position.  This
         // is done because prior to being loaded you'll get NaN for this.Height and 0 for
         // this.ActualHeight.
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -215,7 +218,7 @@ namespace Spofy
             }
         }
 
-        // Similar to MouseDown.  We're setting dragging flag to false to allow automatic 
+        // Similar to MouseDown.  We're setting dragging flag to false to allow automatic
         // positioning.
         private void Window_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -277,6 +280,6 @@ namespace Spofy
             timer.Start();
         }
 
-        #endregion
+        #endregion Snap to Edges
     }
 }

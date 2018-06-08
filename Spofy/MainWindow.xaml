@@ -2,18 +2,18 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Height="310" Width="200"
-        Background="{StaticResource BackgroundColor}">
+        Background="Transparent">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo Description="Control your media" ThumbnailClipMargin="5">
             <TaskbarItemInfo.ThumbButtonInfos>
                 <ThumbButtonInfoCollection>
                     <ThumbButtonInfo x:Name="ThumbPlayButton"
                                      DismissWhenClicked="False"
-                                     Description="Play" 
-                                     ImageSource="Images/previous.png"/>
+                                     Description="Play"
+                                     ImageSource="Images/previous.png" />
                     <ThumbButtonInfo x:Name="ThumbStopButton"
                                      DismissWhenClicked="False"
-                                     Description="Stop" ImageSource="Images/play.png" Click="ThumbPlayButton_Click"/>
+                                     Description="Stop" ImageSource="Images/play.png" Click="ThumbPlayButton_Click" />
                     <ThumbButtonInfo x:Name="ThumbPauseInfo"
                                      DismissWhenClicked="False"
                                      Description="Pause" ImageSource="Images/next.png" />
@@ -47,6 +47,6 @@
         </ContextMenu>
     </Window.ContextMenu>
 
-    <Grid x:Name="mainContent">
+    <Grid x:Name="mainContent" Background="{StaticResource BackgroundColor}">
     </Grid>
 </Window>
