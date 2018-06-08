@@ -33,5 +33,11 @@ Donations would be more than welcome :)
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5F83RGQC256)
 
+## Related projects
+Also take a look at these awesome projects:
+* [Smallify by Hypzeh](https://github.com/Hypzeh/Smallify)
+* [Spofy-XL by LightSnowDev](https://github.com/LightSnowDev/Spofy-XL) (Spofy on the big screen!)
+
+
 ## Copyright and License
 This piece of software is licensed under the GNU GPL v2.0. The complete license could be found at [http://www.gnu.org/licenses/gpl-2.0.txt](http://www.gnu.org/licenses/gpl-2.0.txt) or in the LICENSE.txt file in this repository.
