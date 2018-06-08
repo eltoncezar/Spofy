@@ -20,39 +20,50 @@
             </summary>
             <returns>true if the track is an advert, false otherwise</returns>
         </member>
-        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArtUrl(SpotifyAPI.Local.Enums.AlbumArtSize)">
+        <member name="M:SpotifyAPI.Local.Models.Track.IsOtherTrackType">
+            <summary>
+            Checks if the track id of type "other"
+            </summary>
+            <returns>true if the track is neither an advert nor a normal track, for example a podcast</returns>
+        </member>
+        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArtUrl(SpotifyAPI.Local.Enums.AlbumArtSize,SpotifyAPI.ProxyConfig)">
             <summary>
             Returns a URL to the album cover in the provided size
             </summary>
             <param name="size">AlbumArtSize (160,320,640)</param>
+            <param name="proxyConfig">Optional proxy settings</param>
             <returns>A String, which is the URL to the Albumart</returns>
         </member>
-        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArtAsync(SpotifyAPI.Local.Enums.AlbumArtSize)">
+        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArtAsync(SpotifyAPI.Local.Enums.AlbumArtSize,SpotifyAPI.ProxyConfig)">
             <summary>
             Returns a Bitmap of the album cover in the provided size asynchronous
             </summary>
             <param name="size">AlbumArtSize (160,320,640)</param>
+            <param name="proxyConfig">Optional proxy settings</param>
             <returns>A Bitmap, which is the albumart</returns>
         </member>
-        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArtAsByteArrayAsync(SpotifyAPI.Local.Enums.AlbumArtSize)">
+        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArtAsByteArrayAsync(SpotifyAPI.Local.Enums.AlbumArtSize,SpotifyAPI.ProxyConfig)">
             <summary>
             Returns a byte[] of the the album cover in the provided size asynchronous
             </summary>
             <param name="size">AlbumArtSize (160,320,640)</param>
+            <param name="proxyConfig">Optional proxy settings</param>
             <returns>A byte[], which is the albumart in binary data</returns>
         </member>
-        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArt(SpotifyAPI.Local.Enums.AlbumArtSize)">
+        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArt(SpotifyAPI.Local.Enums.AlbumArtSize,SpotifyAPI.ProxyConfig)">
             <summary>
             Returns a Bitmap of the album cover in the provided size
             </summary>
             <param name="size">AlbumArtSize (160,320,640)</param>
+            <param name="proxyConfig">Optional proxy settings</param>
             <returns>A Bitmap, which is the albumart</returns>
         </member>
-        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArtAsByteArray(SpotifyAPI.Local.Enums.AlbumArtSize)">
+        <member name="M:SpotifyAPI.Local.Models.Track.GetAlbumArtAsByteArray(SpotifyAPI.Local.Enums.AlbumArtSize,SpotifyAPI.ProxyConfig)">
             <summary>
             Returns a byte[] of the album cover in the provided size
             </summary>
             <param name="size">AlbumArtSize (160,320,640)</param>
+            <param name="proxyConfig">Optional proxy settings</param>
             <returns>A byte[], which is the albumart in binary data</returns>
         </member>
         <member name="T:SpotifyAPI.Local.TrackChangeEventArgs">
@@ -169,6 +180,14 @@
             </summary>
             <returns>True, if it's running, false if not</returns>
         </member>
+        <member name="M:SpotifyAPI.Local.SpotifyLocalAPI.IsSpotifyInstalled">
+            <summary>
+            Determines whether [spotify is installed].
+            </summary>
+            <returns>
+              <c>true</c> if [spotify is installed]; otherwise, <c>false</c>.
+            </returns>
+        </member>
         <member name="M:SpotifyAPI.Local.SpotifyLocalAPI.RunSpotify">
             <summary>
             Runs Spotify
@@ -179,129 +198,28 @@
             Runs Spotify's WebHelper
             </summary>
         </member>
-        <member name="T:SpotifyAPI.Web.Enums.TimeRangeType">
+        <member name="P:SpotifyAPI.ProxyConfig.BypassProxyOnLocal">
             <summary>
-                Only one value allowed
+            Whether to bypass the proxy server for local addresses.
             </summary>
         </member>
-        <member name="M:SpotifyAPI.Web.IClient.Download(System.String)">
+        <member name="M:SpotifyAPI.ProxyConfig.IsValid">
             <summary>
-                Downloads data from an URL and returns it
+            Whether both <see cref="P:SpotifyAPI.ProxyConfig.Host"/> and <see cref="P:SpotifyAPI.ProxyConfig.Port"/> have valid values.
             </summary>
-            <param name="url">An URL</param>
             <returns></returns>
         </member>
-        <member name="M:SpotifyAPI.Web.IClient.DownloadAsync(System.String)">
+        <member name="M:SpotifyAPI.ProxyConfig.GetUri">
             <summary>
-                Downloads data async from an URL and returns it
+            Create a <see cref="T:System.Uri"/> from the host and port number
             </summary>
-            <param name="url"></param>
-            <returns></returns>
+            <returns>A URI</returns>
         </member>
-        <member name="M:SpotifyAPI.Web.IClient.DownloadRaw(System.String)">
+        <member name="M:SpotifyAPI.ProxyConfig.CreateWebProxy">
             <summary>
-                Downloads data from an URL and returns it
+            Creates a <see cref="T:System.Net.WebProxy"/> from the proxy details of this object.
             </summary>
-            <param name="url">An URL</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.DownloadRawAsync(System.String)">
-            <summary>
-                Downloads data async from an URL and returns it
-            </summary>
-            <param name="url"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.DownloadJson``1(System.String)">
-            <summary>
-                Downloads data from an URL and converts it to an object
-            </summary>
-            <typeparam name="T">The Type which the object gets converted to</typeparam>
-            <param name="url">An URL</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.DownloadJsonAsync``1(System.String)">
-            <summary>
-                Downloads data async from an URL and converts it to an object
-            </summary>
-            <typeparam name="T">The Type which the object gets converted to</typeparam>
-            <param name="url">An URL</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.Upload(System.String,System.String,System.String)">
-            <summary>
-                Uploads data from an URL and returns the response
-            </summary>
-            <param name="url">An URL</param>
-            <param name="body">The Body-Data (most likely a JSON String)</param>
-            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.UploadAsync(System.String,System.String,System.String)">
-            <summary>
-                Uploads data async from an URL and returns the response
-            </summary>
-            <param name="url">An URL</param>
-            <param name="body">The Body-Data (most likely a JSON String)</param>
-            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.UploadRaw(System.String,System.String,System.String)">
-            <summary>
-                Uploads data from an URL and returns the response
-            </summary>
-            <param name="url">An URL</param>
-            <param name="body">The Body-Data (most likely a JSON String)</param>
-            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.UploadRawAsync(System.String,System.String,System.String)">
-            <summary>
-                Uploads data async from an URL and returns the response
-            </summary>
-            <param name="url">An URL</param>
-            <param name="body">The Body-Data (most likely a JSON String)</param>
-            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.UploadJson``1(System.String,System.String,System.String)">
-            <summary>
-                Uploads data from an URL and converts the response to an object
-            </summary>
-            <typeparam name="T">The Type which the object gets converted to</typeparam>
-            <param name="url">An URL</param>
-            <param name="body">The Body-Data (most likely a JSON String)</param>
-            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.UploadJsonAsync``1(System.String,System.String,System.String)">
-            <summary>
-                Uploads data async from an URL and converts the response to an object
-            </summary>
-            <typeparam name="T">The Type which the object gets converted to</typeparam>
-            <param name="url">An URL</param>
-            <param name="body">The Body-Data (most likely a JSON String)</param>
-            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.SetHeader(System.String,System.String)">
-            <summary>
-                Sets a specific Header
-            </summary>
-            <param name="header">Header name</param>
-            <param name="value">Header value</param>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.RemoveHeader(System.String)">
-            <summary>
-                Removes a specific Header
-            </summary>
-            <param name="header">Header name</param>
-        </member>
-        <member name="M:SpotifyAPI.Web.IClient.GetHeaders">
-            <summary>
-                Gets all current Headers
-            </summary>
-            <returns>A collection of Header KeyValue Pairs</returns>
+            <returns>A <see cref="T:System.Net.WebProxy"/> or <code>null</code> if the proxy details are invalid.</returns>
         </member>
         <member name="E:SpotifyAPI.Web.Auth.AutorizationCodeAuth.OnResponseReceivedEvent">
             <summary>
@@ -344,6 +262,12 @@
             </summary>
             <returns>A new Token</returns>
         </member>
+        <member name="M:SpotifyAPI.Web.Auth.ClientCredentialsAuth.DoAuthAsync">
+            <summary>
+                Starts the auth process async and
+            </summary>
+            <returns>A new Token</returns>
+        </member>
         <member name="M:SpotifyAPI.Web.Auth.ImplicitGrantAuth.DoAuth">
             <summary>
                 Start the auth process (Make sure the internal HTTP-Server ist started)
@@ -358,6 +282,123 @@
             <summary>
                 This will stop the internal HTTP-Server (Should be called after you got the Token)
             </summary>
+        </member>
+        <member name="T:SpotifyAPI.Web.Enums.TimeRangeType">
+            <summary>
+                Only one value allowed
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.Download(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Downloads data from an URL and returns it
+            </summary>
+            <param name="url">An URL</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.DownloadAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Downloads data async from an URL and returns it
+            </summary>
+            <param name="url"></param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.DownloadRaw(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Downloads data from an URL and returns it
+            </summary>
+            <param name="url">An URL</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.DownloadRawAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Downloads data async from an URL and returns it
+            </summary>
+            <param name="url"></param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.DownloadJson``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Downloads data from an URL and converts it to an object
+            </summary>
+            <typeparam name="T">The Type which the object gets converted to</typeparam>
+            <param name="url">An URL</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.DownloadJsonAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Downloads data async from an URL and converts it to an object
+            </summary>
+            <typeparam name="T">The Type which the object gets converted to</typeparam>
+            <param name="url">An URL</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.Upload(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Uploads data from an URL and returns the response
+            </summary>
+            <param name="url">An URL</param>
+            <param name="body">The Body-Data (most likely a JSON String)</param>
+            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.UploadAsync(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Uploads data async from an URL and returns the response
+            </summary>
+            <param name="url">An URL</param>
+            <param name="body">The Body-Data (most likely a JSON String)</param>
+            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.UploadRaw(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Uploads data from an URL and returns the response
+            </summary>
+            <param name="url">An URL</param>
+            <param name="body">The Body-Data (most likely a JSON String)</param>
+            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.UploadRawAsync(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Uploads data async from an URL and returns the response
+            </summary>
+            <param name="url">An URL</param>
+            <param name="body">The Body-Data (most likely a JSON String)</param>
+            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.UploadJson``1(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Uploads data from an URL and converts the response to an object
+            </summary>
+            <typeparam name="T">The Type which the object gets converted to</typeparam>
+            <param name="url">An URL</param>
+            <param name="body">The Body-Data (most likely a JSON String)</param>
+            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.IClient.UploadJsonAsync``1(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Uploads data async from an URL and converts the response to an object
+            </summary>
+            <typeparam name="T">The Type which the object gets converted to</typeparam>
+            <param name="url">An URL</param>
+            <param name="body">The Body-Data (most likely a JSON String)</param>
+            <param name="method">The Upload-method (POST,DELETE,PUT)</param>
+            <param name="headers"></param>
+            <returns></returns>
         </member>
         <member name="P:SpotifyAPI.Web.Models.FullTrack.IsPlayable">
             <summary>
@@ -381,6 +422,46 @@
                 Checks if the token has expired
             </summary>
             <returns></returns>
+        </member>
+        <member name="P:SpotifyAPI.Web.SpotifyWebAPI.TokenType">
+            <summary>
+                The type of the <see cref="P:SpotifyAPI.Web.SpotifyWebAPI.AccessToken"/>
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.SpotifyWebAPI.AccessToken">
+            <summary>
+                A valid token issued by spotify. Used only when <see cref="P:SpotifyAPI.Web.SpotifyWebAPI.UseAuth"/> is true
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.SpotifyWebAPI.UseAuth">
+            <summary>
+                If true, an authorization header based on <see cref="P:SpotifyAPI.Web.SpotifyWebAPI.TokenType"/> and <see cref="P:SpotifyAPI.Web.SpotifyWebAPI.AccessToken"/> will be used
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.SpotifyWebAPI.WebClient">
+            <summary>
+                A custom WebClient, used for Unit-Testing
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.SpotifyWebAPI.RetryAfter">
+            <summary>
+                Specifies after how many miliseconds should a failed request be retried.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.SpotifyWebAPI.UseAutoRetry">
+            <summary>
+                Should a failed request (specified by <see cref="P:SpotifyAPI.Web.SpotifyWebAPI.RetryErrorCodes"/> be automatically retried or not.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.SpotifyWebAPI.RetryTimes">
+            <summary>
+                Maximum number of tries for one failed request.
+            </summary>
+        </member>
+        <member name="P:SpotifyAPI.Web.SpotifyWebAPI.RetryErrorCodes">
+            <summary>
+                Error codes that will trigger auto-retry if <see cref="P:SpotifyAPI.Web.SpotifyWebAPI.UseAutoRetry"/> is enabled.
+            </summary>
         </member>
         <member name="M:SpotifyAPI.Web.SpotifyWebAPI.SearchItems(System.String,SpotifyAPI.Web.Enums.SearchType,System.Int32,System.Int32,System.String)">
             <summary>
@@ -1186,6 +1267,26 @@
             <returns></returns>
             <remarks>AUTH NEEDED</remarks>
         </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetUsersRecentlyPlayedTracks(System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+                Get tracks from the current user’s recent play history.
+            </summary>
+            <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. </param>
+            <param name="after">A Unix timestamp in milliseconds. Returns all items after (but not including) this cursor position. If after is specified, before must not be specified.</param>
+            <param name="before">A Unix timestamp in milliseconds. Returns all items before (but not including) this cursor position. If before is specified, after must not be specified.</param>
+            <returns></returns>
+            <remarks>AUTH NEEDED</remarks>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetUsersRecentlyPlayedTracksAsync(System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+                Get tracks from the current user’s recent play history asynchronously
+            </summary>
+            <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. </param>
+            <param name="after">A Unix timestamp in milliseconds. Returns all items after (but not including) this cursor position. If after is specified, before must not be specified.</param>
+            <param name="before">A Unix timestamp in milliseconds. Returns all items before (but not including) this cursor position. If before is specified, after must not be specified.</param>
+            <returns></returns>
+            <remarks>AUTH NEEDED</remarks>
+        </member>
         <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetUserPlaylists(System.String,System.Int32,System.Int32)">
             <summary>
                 Get a list of the playlists owned or followed by a Spotify user.
@@ -1518,6 +1619,22 @@
             <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
             <returns></returns>
         </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetAudioAnalysis(System.String)">
+            <summary>
+                Get a detailed audio analysis for a single track identified by its unique Spotify ID.
+            </summary>
+            <param name="id">The Spotify ID for the track.</param>
+            <returns></returns>
+            <remarks>AUTH NEEDED</remarks>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetAudioAnalysisAsync(System.String)">
+            <summary>
+                Get a detailed audio analysis for a single track identified by its unique Spotify ID asynchronously.
+            </summary>
+            <param name="id">The Spotify ID for the track.</param>
+            <returns></returns>
+            <remarks>AUTH NEEDED</remarks>
+        </member>
         <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetAudioFeatures(System.String)">
             <summary>
                 Get audio feature information for a single track identified by its unique Spotify ID.
@@ -1549,6 +1666,116 @@
             <param name="ids">A list of Spotify Track-IDs. Maximum: 100 IDs.</param>
             <returns></returns>
             <remarks>AUTH NEEDED</remarks>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetDevices">
+            <summary>
+                Get information about a user’s available devices.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetPlayback(System.String)">
+            <summary>
+                Get information about the user’s current playback state, including track, track progress, and active device.
+            </summary>
+            <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.GetPlayingTrack(System.String)">
+            <summary>
+                Get the object currently being played on the user’s Spotify account.
+            </summary>
+            <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.TransferPlayback(System.String,System.Boolean)">
+            <summary>
+                Transfer playback to a new device and determine if it should start playing.
+            </summary>
+            <param name="deviceId">ID of the device on which playback should be started/transferred to</param>
+            <param name="play">
+            true: ensure playback happens on new device.
+            false or not provided: keep the current playback state.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.TransferPlayback(System.Collections.Generic.List{System.String},System.Boolean)">
+            <summary>
+                Transfer playback to a new device and determine if it should start playing. 
+                NOTE: Although an array is accepted, only a single device_id is currently supported. Supplying more than one will return 400 Bad Request
+            </summary>
+            <param name="deviceIds">A array containing the ID of the device on which playback should be started/transferred.</param>
+            <param name="play">
+            true: ensure playback happens on new device.
+            false or not provided: keep the current playback state.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.ResumePlayback(System.String,System.String,System.Collections.Generic.List{System.String},System.Nullable{System.Int32})">
+            <summary>
+                Start a new context or resume current playback on the user’s active device.
+            </summary>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <param name="contextUri">Spotify URI of the context to play.</param>
+            <param name="uris">A JSON array of the Spotify track URIs to play.</param>
+            <param name="offset">Indicates from where in the context playback should start. 
+            Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.PausePlayback(System.String)">
+            <summary>
+                Pause playback on the user’s account.
+            </summary>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.SkipPlaybackToNext(System.String)">
+            <summary>
+                Skips to next track in the user’s queue.
+            </summary>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.SkipPlaybackToPrevious(System.String)">
+            <summary>
+                Skips to previous track in the user’s queue.
+                Note that this will ALWAYS skip to the previous track, regardless of the current track’s progress.
+                Returning to the start of the current track should be performed using the https://api.spotify.com/v1/me/player/seek endpoint.
+            </summary>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.SeekPlayback(System.Int32,System.String)">
+            <summary>
+                Seeks to the given position in the user’s currently playing track.
+            </summary>
+            <param name="positionMs">The position in milliseconds to seek to. Must be a positive number. 
+            Passing in a position that is greater than the length of the track will cause the player to start playing the next song.</param>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.SetRepeatMode(SpotifyAPI.Web.Enums.RepeatState,System.String)">
+            <summary>
+                Set the repeat mode for the user’s playback. Options are repeat-track, repeat-context, and off.
+            </summary>
+            <param name="state">track, context or off. </param>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.SetVolume(System.Int32,System.String)">
+            <summary>
+                Set the volume for the user’s current playback device.
+            </summary>
+            <param name="volumePercent">Integer. The volume to set. Must be a value from 0 to 100 inclusive.</param>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebAPI.SetShuffle(System.Boolean,System.String)">
+            <summary>
+                Toggle shuffle on or off for user’s playback.
+            </summary>
+            <param name="shuffle">True or False</param>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
         </member>
         <member name="T:SpotifyAPI.Web.SpotifyWebBuilder">
             <summary>
@@ -1897,6 +2124,16 @@
             <returns></returns>
             <remarks>AUTH NEEDED</remarks>
         </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.GetUsersRecentlyPlayedTracks(System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+                Get tracks from the current user’s recent play history.
+            </summary>
+            <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. </param>
+            <param name="after">A Unix timestamp in milliseconds. Returns all items after (but not including) this cursor position. If after is specified, before must not be specified.</param>
+            <param name="before">A Unix timestamp in milliseconds. Returns all items before (but not including) this cursor position. If before is specified, after must not be specified.</param>
+            <returns></returns>
+            <remarks>AUTH NEEDED</remarks>
+        </member>
         <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.GetUserPlaylists(System.String,System.Int32,System.Int32)">
             <summary>
                 Get a list of the playlists owned or followed by a Spotify user.
@@ -2035,6 +2272,14 @@
             <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
             <returns></returns>
         </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.GetAudioAnalysis(System.String)">
+            <summary>
+                Get a detailed audio analysis for a single track identified by its unique Spotify ID.
+            </summary>
+            <param name="id">The Spotify ID for the track.</param>
+            <returns></returns>
+            <remarks>AUTH NEEDED</remarks>
+        </member>
         <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.GetAudioFeatures(System.String)">
             <summary>
                 Get audio feature information for a single track identified by its unique Spotify ID.
@@ -2050,6 +2295,95 @@
             <param name="ids">A list of Spotify Track-IDs. Maximum: 100 IDs.</param>
             <returns></returns>
             <remarks>AUTH NEEDED</remarks>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.GetDevices">
+            <summary>
+                Get information about a user’s available devices.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.GetPlayback(System.String)">
+            <summary>
+                Get information about the user’s current playback state, including track, track progress, and active device.
+            </summary>
+            <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.GetPlayingTrack(System.String)">
+            <summary>
+                Get the object currently being played on the user’s Spotify account.
+            </summary>
+            <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.TransferPlayback">
+            <summary>
+                Transfer playback to a new device and determine if it should start playing.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.ResumePlayback(System.String)">
+            <summary>
+                Start a new context or resume current playback on the user’s active device.
+            </summary>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.PausePlayback(System.String)">
+            <summary>
+                Pause playback on the user’s account.
+            </summary>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.SkipPlaybackToNext(System.String)">
+            <summary>
+                Skips to next track in the user’s queue.
+            </summary>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.SkipPlaybackToPrevious(System.String)">
+            <summary>
+                Skips to previous track in the user’s queue.
+                Note that this will ALWAYS skip to the previous track, regardless of the current track’s progress.
+                Returning to the start of the current track should be performed using the https://api.spotify.com/v1/me/player/seek endpoint.
+            </summary>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.SeekPlayback(System.Int32,System.String)">
+            <summary>
+                Seeks to the given position in the user’s currently playing track.
+            </summary>
+            <param name="positionMs">The position in milliseconds to seek to. Must be a positive number. 
+            Passing in a position that is greater than the length of the track will cause the player to start playing the next song.</param>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.SetRepeatMode(SpotifyAPI.Web.Enums.RepeatState,System.String)">
+            <summary>
+                Set the repeat mode for the user’s playback. Options are repeat-track, repeat-context, and off.
+            </summary>
+            <param name="repeatState">track, context or off.</param>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.SetVolume(System.Int32,System.String)">
+            <summary>
+                Set the volume for the user’s current playback device.
+            </summary>
+            <param name="volumePercent">Integer. The volume to set. Must be a value from 0 to 100 inclusive.</param>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpotifyAPI.Web.SpotifyWebBuilder.SetShuffle(System.Boolean,System.String)">
+            <summary>
+                Toggle shuffle on or off for user’s playback.
+            </summary>
+            <param name="shuffle">True of False.</param>
+            <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+            <returns></returns>
         </member>
     </members>
 </doc>
