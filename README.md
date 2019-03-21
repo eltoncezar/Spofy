@@ -1,3 +1,7 @@
+# UPDATE
+Currently I'm working on a complete rewrite of Spofy, using dotnet core and Avalonia as UI, so I hope we can get multi plataform.
+But since this is a side project, don't expect anything soon. Also, any help will be appreciated.
+
 # Spofy
 Spofy is a WPF-Based Spotify mini player and notifier for Windows.
 
